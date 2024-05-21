@@ -2,9 +2,9 @@ import re
 
 
 class Solution:
-    def isPalindrome(self, s: str) -> bool:
-        a = re.sub("[^a-z0-9]*", "", s.lower())
-        return a == "".join(reversed(a))
+    # def isPalindrome(self, s: str) -> bool:
+        # a = re.sub("[^a-z0-9]*", "", s.lower())
+        # return a == "".join(reversed(a))
 
     # my attempt
     # def isPalindrome(self, s: str) -> bool:
@@ -13,6 +13,12 @@ class Solution:
     #         if a[i] != a[-i - 1]:
     #             return False
     #     return True
+
+    def isPalindrome(self, s: str) -> bool:
+        a = re.sub('[^A-Za-z0-9]',"", s.lower())
+        return a == "".join(list(reversed(a)))
+        
+
 
 
 if __name__ == "__main__":

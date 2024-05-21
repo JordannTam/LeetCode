@@ -27,9 +27,27 @@ class Solution:
     #             result.append([s])
     #     return result
 
-    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        d = defaultdict(list)
+    # def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+    #     d = defaultdict(list)
 
-        for word in strs:
-            d["".join(sorted(word))].append(word)
-        return list(d.values())
+    #     for word in strs:
+    #         d["".join(sorted(word))].append(word)
+    #     return list(d.values())
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        hashMap = {}
+        result = []
+        # if the two strings are anagram, the sorted(string) would be the same and unique. If we keep the sorted(string) as the key of hashmap, we can get the list of anagrams
+        for s in strs:
+            a = "".join(sorted(s))
+            if a not in hashMap:
+                hashMap[a] = []
+            hashMap[a].append(s)
+        for ls in hashMap.values():
+            result.append(ls)
+        return ls
+
+if __name__ == '__main__':
+    s = Solution()
+    print(s.groupAnagrams(["eat","tea","tan","ate","nat","bat"]))
+
+

@@ -1,27 +1,42 @@
 from typing import List
-
+from collections import Counter
 
 class Solution:
     def isValidSudoku(self, board: List[List[str]]) -> bool:
-        for i in range(9):
-            for j in range(9):
-                if board[i][j] == ".":
-                    continue
-                if board[i].count(board[i][j]) > 1:
-                    return False
-                for n in range(9):
-                    if i != n and board[n][j] == board[i][j]:
-                        return False
+        return self.rowCheck(board) and self.columnCheck(board) and self.blockCheck(board)
 
-                rowArea = int(i / 3)
-                colArea = int(j / 3)
-                for a in range(3):
-                    for b in range(3):
-                        if rowArea * 3 + a == i and colArea * 3 + b == j:
-                            continue
-                        if board[i][j] == board[rowArea * 3 + a][colArea * 3 + b]:
-                            return False
+    def rowCheck(self, board):
+        for row in board:
+            ls = []
+            for element in row:
+                if element in ls:
+                    return False
+                if element != ".":
+                    ls.append(element)
         return True
+    def columnCheck(self, board):
+        for i in range(9):
+            ls = []
+            for j in range(9):
+                if board[j][i] in ls:
+                    return False
+                if board[j][i] != ".":
+                    ls.append(board[j][i])
+        return True 
+    def blockCheck(self, board):
+        # 3 times 
+        for h in range(3):
+            for k in range(3):
+                ls = []
+                for i in range(3):
+                    for j in range(3):
+                        if board[i + (h * 3)][j + (k * 3)] in ls:
+                            return False
+                        if board[i + (h * 3)][j + (k * 3)] != ".":
+                            ls.append(board[i + (h * 3)][j + (k * 3)])
+        return True
+
+
 
 
 if __name__ == "__main__":
