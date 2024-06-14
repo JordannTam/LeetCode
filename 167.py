@@ -16,25 +16,37 @@ class Solution:
 
         #         return [index + 1, numbers.index(target - n) + 1]
 
-        d = {}
-        for index, v in enumerate(numbers):
-            if v not in d:
-                d[v] = []
-            d[v].append(index)
+        # d = {}
+        # for index, v in enumerate(numbers):
+        #     if v not in d:
+        #         d[v] = []
+        #     d[v].append(index)
 
-        for index, v in enumerate(numbers):
-            key = target - v
+        # for index, v in enumerate(numbers):
+        #     key = target - v
 
-            if key in d:
-                if d[key][0] == index:
-                    if len(d[key]) == 1:
-                        continue
-                    else:
-                        return [index + 1, d[key][1] + 1]
-                else:
-                    return [index + 1, d[key][0] + 1]
+        #     if key in d:
+        #         if d[key][0] == index:
+        #             if len(d[key]) == 1:
+        #                 continue
+        #             else:
+        #                 return [index + 1, d[key][1] + 1]
+        #         else:
+        #             return [index + 1, d[key][0] + 1]
+
+        n = len(numbers)
+        i = 0
+        j = n - 1
+        while i < j:
+            if numbers[i] + numbers[j] == target:
+                break
+            elif numbers[i] + numbers[j] < target:
+                i += 1
+            else:
+                j -= 1
+        return [i, j]
 
 
 if __name__ == "__main__":
     s = Solution()
-    print(Solution.twoSum(s, [2, 3, 4], 6))
+    print(Solution.twoSum(s, [2, 3, 4, 5], 6))

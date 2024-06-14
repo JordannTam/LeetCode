@@ -3,21 +3,17 @@ from typing import List
 
 class Solution:
     def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+        if len(temperatures) <= 1:
+            return temperatures
         stack = []
-        res = [0 for _ in range(len(temperatures))]
+        result = [0 for _ in range(len(temperatures))]
 
-        for i, temp in enumerate(temperatures):
-            a = (i, temp)
-            while (stack != [] and stack[-1][1] < temp):
-                curr = stack.pop()
-                res[curr[0]] = i - curr[0]
-            stack.append(a)
-        return res
-
-
-
-            
-
+        for index, temp in enumerate(temperatures):
+            while(stack and temperatures[stack[-1]] < temp):
+                i = stack.pop()
+                result[i] = index - i
+            stack.append(index)
+        return result
 
 if __name__ == "__main__":
     s = Solution()
