@@ -1,46 +1,47 @@
-# My first approach with DP
 
-# class Solution:
-#     def lengthOfLongestSubstring(self, s: str) -> int:
-#         longest = 0
-#         longList = [[0 for _ in range(len(s))] for _ in range(len(s))]
 
-#         # longList[0].append(1)
-
-#         for i in range(len(s)):
-#             for j in range(i, len(s)):
-#                 if s[j] in list(s[i:j]):
-#                     longList[i][j] = 1
-#                 else:
-#                     longList[i][j] = longList[i][j - 1] + 1
-#                 # print(f"s[i:j]={s[i:j]} i={i} j={j}")
-
-#         for i in longList:
-#             if max(i) > longest:
-#                 longest = max(i)
-#         return longest
+import collections
 
 
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
         longest = 0
+        currLen = 0
+        queue = collections.deque()
 
-        for i in range(len(s)):
-            currList = []
-            for j in range(i, len(s)):
-                if s[j] not in currList:
-                    currList.append(s[j])
-                    if n > longest:
-                        longest = n
+        for c in s:
+            if c not in queue:
+                queue.append(c)
+                currLen += 1
+                if currLen > longest:
+                    longest = currLen
+            else:
+                while(c in queue):
+                    curr = queue.popleft()
+                    currLen -= 1
+                queue.append(c)
+                currLen += 1
+        return longest
+    
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        charSet = set()
+        l = 0
+        n = len(s)
+        longest = 0
 
-                else:
-                    n = len(currList)
-                    if n > longest:
-                        longest = n
-                    break
+        for r in range(n):
+            if s[r] not in charSet:
+                charSet.add(s[r])
+                # currLen += 1
+            else:
+                while(s[r] in charSet):
+                    charSet.remove(s[l])
+                    l += 1
+                charSet.add(s[r])
+            longest = max(longest, r - l + 1)
         return longest
 
 
 if __name__ == "__main__":
     s = Solution()
-    print(Solution.lengthOfLongestSubstring(s, "abcabcbbb"))
+    print(Solution.lengthOfLongestSubstring(s, "jbpnbwwd"))
