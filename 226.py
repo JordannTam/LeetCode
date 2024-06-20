@@ -4,17 +4,6 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
-# class Solution:
-#     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-
-#         temp = root.left
-#         root.left = root.right
-#         root.right = temp
-#         self.invertTree(root.left)
-#         self.invertTree(root.right)
-
-#         return root
-
 
 from typing import Optional
 
@@ -22,16 +11,11 @@ from typing import Optional
 class Solution:
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
         if root == None:
-            return None
-        temp = self.invertTree(root.left)
-        root.left = self.invertTree(root.right)
-        root.right = temp
-
+            return root
+        l = self.left
+        self.left = self.invertTree(self.right)
+        self.right = self.invertTree(l)
         return root
-
-        
-        
-
 
 
 
