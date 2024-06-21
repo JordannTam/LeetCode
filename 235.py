@@ -7,51 +7,20 @@ class TreeNode:
 
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        res = [-1]
+        if root == None:
+            return 0
+        def search(node):
+            if node == None:
+                return False
+            l = search(node.left)
+            r = search(node.right)
+            if (l and r) or (node.val == p.val and (l or r)) or (node.val == q.val and (l or r)) and res[0] == -1:
+                res[0] = node.val
+                return True
+            if node.val == p.val or node.val == q.val:
+                return True
+            return l or r
+        search(root)
+        return res[0]
         
-        def findTarget(top):
-            if top.left == None and top.right == None:
-                if top.val != p and top.val != q:
-                    return False, False, None
-                elif top.val == q:
-                    return False, True, None
-                elif top.val == p:
-                    return True, False, None
-            else:
-                hasP, hasQ, T = False, False, None
-                if top.left != None:
-                    tempP, tempQ, tempT = findTarget(top.left)
-                    hasP, hasQ, T = tempP|hasP, tempQ|hasQ, tempT
-                if top.right != None:
-                    tempP, tempQ, tempT = findTarget(top.right)
-                    hasP, hasQ, T = tempP|hasP, tempQ|hasQ, tempT
-                # Case 1 : left and right are not the targets
-                if top.val != p or top.val != q:
-                    if T == None and hasP and hasQ:
-                        return hasP, hasQ, top.val
-                    else:
-                        return hasP, hasQ, T
-                # Case 2 : left is the target, right is not.
-                if top.val == p:
-                    if hasQ:
-                        return True, hasQ, top.val
-                    else:
-                        return True, hasQ, T
-                # Case 3 : left is not the target, right is the target
-                if top.val == q:
-                    if hasP:
-                        return hasP, True, top.val
-                    else:
-                        return hasP, True, T
-        _, _, result = findTarget(root)
-        return result
-
-
-if __name__ == '__main__':
-    S = Solution
-    print(Solution.lowestCommonAncestor(S, [1,2,3], 2, 3))
-
-
-
-
-
-
